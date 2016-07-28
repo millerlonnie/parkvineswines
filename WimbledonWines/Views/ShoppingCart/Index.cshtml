@@ -1,0 +1,139 @@
+﻿ 
+@model WimbledonWines.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>
+ 
+
+<script src="~/Script/respond.min.js"></script>
+<script src="~/Script/respond.js"></script>
+<script src="~/Script/modernizr-2.6.2.js"></script>
+<script src="~/Script/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Script/jquery.validate.unobtrusive.js"></script>
+<script src="~/Script/jquery.validate.min.js"></script>
+<script src="~/Script/jquery.validate.js"></script>
+<script src="~/Script/jquery.validate-vsdoc.js"></script>
+<script src="~/Script/jquery-1.10.2.min.js"></script>
+<script src="~/Script/jquery-1.10.2.js"></script>
+<script src="~/Script/jquery-1.10.2.intellisense.js"></script>
+<script src="~/Script/_references.js"></script>
+<script src="~/Script/bootstrap.js"></script>
+<script src="~/Script/bootstrap.min.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+
+ 
+
+        <h3>
+            <em>Review</em> your cart:
+        </h3>
+
+        <div id="update-message">
+        </div>
+        <table>
+            <tr>
+                <th width="50%">
+                    Wine Name
+                </th>
+                <th width="30%">
+                    Price (each)
+                </th>
+                <th widyh="30%">
+                    Quantity
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in       
+                Model.CartItems)            {
+
+                <tr id="row-@item.RecordId">
+                   
+                    <td>
+                        @item.Wine.WineName
+                        
+                    </td>
+                    <td>
+                      £  @item.Wine.Price
+                    </td>
+                    <td id="item-count-@item.RecordId">
+                        @item.Count
+                    </td>
+                    <td>
+                        <a href="#" class="RemoveLink" data-id="@item.RecordId">
+                            Remove from cart
+                        </a>
+                    </td>
+
+                </tr>
+
+    
+
+
+                }
+
+            <tr>
+                <td> </td>
+                <td></td>
+                <td>Total</td>
+                <td id="cart-total">
+                    £ @Model.CartTotal
+                </td>
+            </tr>
+
+        </table>
+
+
+      
+
+        <br />
+
+
+        <div align="center" class="btn btn-primary">
+            @Html.ActionLink("Checkout >>", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary" })
+
+            
+
+        </div>
+
+        <div align="center" class="btn btn-primary">
+            @Html.ActionLink("Continue Shopping ", "ProductWines", "Home", null, new { @class = "btn btn-primary " })
+        </div>
+
+    

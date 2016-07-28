@@ -1,0 +1,101 @@
+﻿<!-- [Adding a title for the webpage called Home] -->
+@{
+
+
+    ViewData["Title"] = "Home";
+
+}
+
+
+
+
+<!-- [Adding a row to a view, with centred text] -->
+<div class="row text-center">
+
+    <!-- [1 em = 20 px] -->
+    <h1 style="font-size:4em;">Quality Wines</h1>
+    <hr /><!-- [hr= horizontal rule to separate content in html page] -->
+
+    <p class="text">Have a look at the range of our quality wines </p>
+
+    <!-- [anchor tag, with a primary button of size large -->
+    @Html.ActionLink("View our catalouge", "ProductWines", "Home", null, new { @class = "btn btn-primary btn-lg" })
+
+</div>
+
+<div class="container-fluid">
+    <section id="about">
+        <!-- [section tag= creates chapters, uniformity, sections, introductions, headers of page -->
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-sm-6 col-md-3 text-center">
+                <span class="glyphicon glyphicon-ok-sign"></span>
+
+                <h3>Execlusive wines</h3>
+                <p class="text"> We also stock exclusive wines. </p>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-sm-6 col-md-3 text-center">
+                <span class="glyphicon glyphicon-envelope"></span>
+
+                <h3>Fast Delivery</h3>
+                <p class="text"> We provide fast shipping nation wide </p>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-sm-6 col-md-3 text-center">
+                <span class="glyphicon glyphicon-phone"></span>
+
+                <h3>Shop on the go</h3>
+                <p class="text"> Our website site being mobile and tablet friendly allows you to shop on the move. </p>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-sm-6 col-md-3 text-center">
+                <span class="glyphicon glyphicon-globe "></span>
+
+                <h3>Very carefully made</h3>
+                <p class="text"> We partner and stock wines from reputable producers across the world. </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Displaying the partaio view in index page with porfolio imgaes -->
+    <br /><br />
+    <section id="portolio">
+
+        <!--html helper method -->
+       
+
+        @Html.Partial("_initialPartial")
+         
+
+
+    </section>
+
+</div>
+
+<section id="contact">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+
+
+            <h2 class="section-heading">Order Online</h2>
+            <hr />
+            <div style="color:#ff3300;">
+                <p>Have a look at our wine list to see what we have in stock. </p>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+

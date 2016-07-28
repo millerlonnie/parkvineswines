@@ -1,0 +1,28 @@
+﻿
+@model WimbledonWines.Models.IndexViewModel
+<div class="col-md-2">
+
+    <h4 align="center" style="color:#4d0000"><strong> Admins Menu</strong> </h4>
+
+    <br />
+
+
+    <div class="btn btn-alert">
+        @Model.Logins.Count
+        @Html.ActionLink("Manage External Logins", "ManageLogins", "Manage")
+        <br /><br />
+        @Html.ActionLink("Manage Wines", "Index", "Wines")
+        <br /><br />
+        @Html.ActionLink("Manage Wineries", "Index", "Wineries")
+        <br /><br />
+        @Html.ActionLink("Manage Wineries", "Index", "Wineries")
+        <br /><br />
+        @Html.ActionLink("Order Details", "Index", "CustOrderDetails")
+        <br /><br />
+        @Html.ActionLink("Shipping Details", "Index", "Orders")
+        <br /><br />
+
+
+
+    </div>
+</div>

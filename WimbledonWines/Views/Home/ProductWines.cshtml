@@ -1,0 +1,137 @@
+﻿@model WimbledonWines.ViewModels.ProductsListViewModel
+@using WimbledonWines.HtmlHelpers
+@using WimbledonWines.WebUI.Infrastructure
+@using WimbledonWines.Models
+@using WimbledonWines.Abstract
+
+
+ 
+
+@{
+    ViewBag.Title = "Wine Catalogue";
+
+}
+ 
+<div class="container">
+    <div class="row">
+        <div class="col-md-2" id="_Menu">
+
+            @Html.Partial("_Menu") <!-----A partial view to display wines menu------>
+
+        </div>
+
+
+        <div class="col-md-10" id="content">
+            <!--------------------------------------------------------------------------->
+
+            <h2 align="center">Wine Catalogue </h2>
+             
+
+
+
+            <div class="right">
+
+                @foreach (var m in Model.Wines)
+                {
+                    <div>
+
+
+                        <table width="1000" align="center">
+
+
+
+                            <tr>
+                                <td colspan="5" width="200">
+                                    <span class="h4" style="color:#4d0000">
+                                        @m.WineName
+                                         
+                                    </span>
+                                    <div id="img">
+
+
+                                        <img src="@Html.DisplayFor(modelItem => m.ImagePath)" width="170" height="200" />
+                                         
+
+
+
+                                    </div> 
+                                </td>
+                                 
+
+                                <td>
+
+
+                                    Description:
+                                    <span style="color:#4d0000">
+                                     @Html.DisplayFor(modelItem => m.Description)
+                                    </span>
+                                    <br />
+                                    Year:
+                                    @Html.DisplayFor(modelItem => m.YearOfBottling)
+                                    <br />
+                                    Alcohol Percentage:
+                                    @Html.DisplayFor(modelItem => m.AlcoholPercentage)
+                                </td>
+
+                                <td>
+                                    Wine type:
+                                    @Html.DisplayFor(modelItem => m.WineType)
+                                </td>
+
+                                <td>
+                                    <span class="btn btn-info btn-lg">
+                                     @Html.DisplayFor(modelItem => m.Price)
+                                       
+                                    </span>
+                                    <br /><br />
+
+                                    <p class="btn btn-success">
+                                        @Html.ActionLink("Add tocart", "AddToCart", "ShoppingCart", new {id= m.Id}, "")
+                                    </p>  
+               
+                                  
+                                </td>
+                               
+                            </tr>
+
+
+                        </table>
+                        
+                        <br /><br />
+
+                    </div>
+
+                    <br>
+                    
+                }
+
+            </div>
+
+            <!-- razor block that creates a html form for each listed product line 82 -->
+            <!--upon subitting the form, it calls the AddToCart action method in the cart controller-->
+            <!--by defualt, BeginForm helper method creates a form that uses the HTTP post method-->
+            <div class=" pull-right">
+
+                @Html.PageLinks(Model.PagingInfo, x => Url.Action("ProductWines", new { page = x, category = Model.CurrentCategory }))
+
+            </div>
+
+            <!---eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-->
+
+            <br /><br /> 
+
+         <!------------------------------------------------------------------------------>
+        </div>
+    </div>
+</div>
+
+  <!-- Displaying the partaio view in index page with porfolio imgaes -->
+ 
+<section id="portolio">
+
+    <!--html helper method -->
+    @Html.Partial("_initialPartial")
+
+
+
+</section>

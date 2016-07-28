@@ -1,0 +1,157 @@
+﻿ <!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/FavIcon/favicon.ico" />`
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>@ViewBag.Title - Park Vines</title>
+    @System.Web.Optimization.Styles.Render("~/bundles/css")
+    @System.Web.Optimization.Scripts.Render("~/bundles/modernizr")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/Libs/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/Libs/Globalize/js")
+    @System.Web.Optimization.Scripts.Render(String.Format("~/Scripts/Libs/Globalize/Cultures/globalize.culture.{0}.js", "en-US"))
+    @System.Web.Optimization.Scripts.Render(String.Format("~/Scripts/Libs/Globalize/Cultures/jquery.ui.datepicker-{0}.js", "en-US"))
+    @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/Apps/js")
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/creative.css" rel="stylesheet" />
+
+    <link href="~/Content/Font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Font-awesome/font-awesome.css" rel="stylesheet" />
+
+
+    <style>
+        .glyphicon {
+            font-size: 5em;
+            color: #ff9900;
+        }
+
+        h1 {
+            color: #800000;
+        }
+
+        h2 {
+            color: #cc3300;
+        }
+
+        p {
+            color: #cc3300;
+            font-size: 17px;
+        }
+
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-size: cover;
+            background-attachment: fixed;
+            background-image: url('../Images/Background/Background.jpg');
+        }
+
+        .whiteBackground {
+            background-color: wheat;
+            opacity: 0.9;
+            padding: 2em;
+        }
+
+
+    </style>
+     
+    
+         
+
+</head>
+<body>
+
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a class="navbar-brand"> <img src="~/Content/Images/logo.png" alt="Company logo"   /> </a>
+                @Html.ActionLink("Park Vines", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    
+                    
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wines<b class="caret"></b></a>
+                        <ul class="dropdown-menu">  <!---Creating a drop down meneu wine categories-->
+
+                           <li>@Html.ActionLink("Red", "ProductWines", "Home", new { category = "Red" }, null)</li>  
+                          
+                         <li>@Html.ActionLink("White", "ProductWines", "Home", new { category = "White" }, null) </li>   
+                            
+                           <li>@Html.ActionLink("Rose", "ProductWines", "Home", new { category = "Rose" }, null)</li> 
+                            
+                         <li>@Html.ActionLink("Sparkling", "ProductWines", "Home", new { category = "Sparkling" }, null)</li>   
+                             
+                        <li>@Html.ActionLink("Champagne", "ProductWines", "Home", new { category = "Champagne" }, null)</li>     
+                            
+                        <li>@Html.ActionLink("FineWine", "ProductWines", "Home", new { category = "FineWine" }, null)</li>    
+                         
+                         <li>@Html.ActionLink("Fortifed", "ProductWines", "Home", new { category = "Fortifed" }, null)</li>   
+                            
+                          <li>@Html.ActionLink("Other", "ProductWines", "Home", new { category = "Other" }, null)</li>  
+                        </ul>
+
+
+
+<li>@Html.ActionLink("Wineries", "Index", "Manage")</li>
+                     
+                   
+                    <li>@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
+                    <span class="glyphicon glyphicon-shopping-cart" style='font-size: 2em'></span>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <!-----------                 ----------> 
+
+    <div class="container body-content whiteBackground">
+        
+          
+
+            <div class="row">
+
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Park Vines</p>
+                </footer>
+
+            </div>
+         
+    </div>
+
+
+
+
+
+       
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>

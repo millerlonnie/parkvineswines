@@ -1,0 +1,66 @@
+﻿@model WimbledonWines.Models.IndexViewModel
+@{
+    ViewBag.Title = "Admins Home Page";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="text-center">
+
+        <dd>
+
+            @if (Model.HasPassword)
+            {
+
+                @Html.ActionLink("Change your password", "ChangePassword", "Manage", null, new { @class = "btn btn-btn btn-default btn-lg" })
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+
+
+        </dd>
+
+        <dd>
+            @Model.Logins.Count
+            @Html.ActionLink("Manage External Logins", "ManageLogins", "Manage", null, new { @class = "btn btn-default btn-lg" })
+        </dd>
+
+
+
+
+
+        <dd>
+
+            @Html.ActionLink("Manage Wineries", "Index", "Wineries", null, new { @class = "btn btn-btn btn-default btn-lg" })
+        </dd>
+
+
+        <dd>
+
+            @Html.ActionLink("Manage Wines", "Index", "Wines", null, new { @class = "btn btn-btn btn-default btn-lg" })
+        </dd>
+
+
+        <dd>
+
+            @Html.ActionLink("View Orders", "Index", "CustOrderDetails", null, new { @class = "btn btn-btn btn-default btn-lg" })
+        </dd>
+
+        <dd>
+
+            @Html.ActionLink("View Customer Order Details", "Index", "Orders", null, new { @class = "btn btn-btn btn-default btn-lg" })
+        </dd>
+
+
+
+
+    </dl>
+</div>
+
+<!-- [----------------------------------------------------------------------------------------------------------------- -->

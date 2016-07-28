@@ -1,0 +1,18 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Checkout Complete";
+}
+
+<div class="row text-center">
+    <h2>Checkout Completed</h2>
+    <br />
+    <p>Thanks for shopping with us, your oder number is : @model
+    <br />
+    <p>
+        Feel free to check out some more wine
+        </p>
+
+        @Html.ActionLink("View our catalouge", "ProductWines", "Home", null, new { @class = "btn btn-primary btn-lg" })
+    
+</div>

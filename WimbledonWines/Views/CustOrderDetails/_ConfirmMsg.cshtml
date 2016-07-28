@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<!--A partail view that informs user of that items have been  added, edited and dteletd succcssfully-->
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/creative.css" rel="stylesheet" />
+    <title></title>
+</head>
+
+<body>
+    <div>
+
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">@TempData["message"]</div> <!--using bootstrap alerts to inform user of succesful action-->
+        }
+
+    </div>
+
+
+</body>
+
+</html>

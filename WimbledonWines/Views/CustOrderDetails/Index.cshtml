@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WimbledonWines.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+@Html.Partial("_confirmmsg") <!--A prartial view to inform user of sucssful actions using bootstrp alters -->
+
+
+<h2>OrderDetails</h2>
+
+  
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WineId)
+        </th>
+        <th>
+            WineName
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+        <th style="color:green">
+            @Html.DisplayNameFor(model => model.OrderStatus)
+
+        </th>
+        <th>
+           Customer Name
+
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WineId)
+        </td>
+        <th>
+            
+            @Html.DisplayFor(modelItem => item.Wine.WineName)
+        </th>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+           £ @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+
+        <td style="color:green">
+            @Html.DisplayFor(modelItem => item.OrderStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.FullName)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderDetailId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailId })
+        </td>
+    </tr>
+}
+
+</table>
+<br /><br />
+@Html.ActionLink("Back To Admins Homepage", "Index", "Manage", null, new { @class = "btn btn-btn btn-default btn-lg" })

@@ -1,0 +1,39 @@
+﻿<!-----------------acessor classes-------------------------------------------------->
+@model WimbledonWines.ViewModels.ProductsListViewModel
+@using WimbledonWines.HtmlHelpers
+@using WimbledonWines.WebUI.Infrastructure
+@using WimbledonWines.Models
+@using WimbledonWines.Abstract
+
+ <!-----------------acessor classes-------------------------------------------------->
+
+<div class="col-md-2">
+
+    <h4 align="center" style="color:#4d0000"><strong> Categories</strong> </h4>
+    
+    <br />
+    
+     
+    <div class="btn btn-alert">
+
+        @Html.ActionLink("Red", "ProductWines", "Home", new { category = "Red" }, null)
+        <br /><br />
+        @Html.ActionLink("White", "ProductWines", "Home", new { category = "White" }, null)
+        <br /><br />
+        @Html.ActionLink("Rose", "ProductWines", "Home", new { category = "Rose" }, null)
+        <br /><br />
+        @Html.ActionLink("Sparkling", "ProductWines", "Home", new { category = "Sparkling" }, null)
+        <br /><br />
+        @Html.ActionLink("Champagne", "ProductWines", "Home", new { category = "Champagne" }, null)
+        <br /><br />
+        @Html.ActionLink("FineWine", "ProductWines", "Home", new { category = "FineWine" }, null)
+        <br /><br />
+        @Html.ActionLink("Fortifed", "ProductWines", "Home", new { category = "Fortifed" }, null)
+        <br /><br />
+        @Html.ActionLink("Other", "ProductWines", "Home", new { category = "Other" }, null)
+
+
+
+    </div>
+</div>
+ 

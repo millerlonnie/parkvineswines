@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WimbledonWines.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2 align=CENTER>Order Details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Order Detail Id
+        </th>
+        <th>
+           Order Id
+        </th>
+        
+        <th>
+            Wine ID
+        </th>
+        <th>
+           Wine  Name
+        </th>
+        <th>
+            Price 
+        </th>
+        <th>
+            QTY
+        </th>
+        <th>
+            OrderStatus
+        </th>
+        <th>
+           Total
+        </th>
+    
+    </tr>
+
+    @foreach (var item in Model)
+    {
+     <tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderDetailId)
+        </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.OrderId)
+         </td>
+
+         <td>
+             @Html.DisplayFor(modelItem => item.WineId)
+         </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.WineId)
+         </td>
+
+
+         <td>
+           £  @Html.DisplayFor(modelItem => item.UnitPrice)
+         </td>
+
+         <td>
+             @Html.DisplayFor(modelItem => item.Quantity)
+         </td>
+
+         <td>
+             @Html.DisplayFor(modelItem => item.OrderStatus)
+         </td>
+          
+
+
+       </tr>
+    }
+
+
+</table>

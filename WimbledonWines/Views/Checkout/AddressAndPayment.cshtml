@@ -1,0 +1,100 @@
+﻿@model WimbledonWines.Models.Order
+
+
+ 
+
+
+
+@{
+    ViewBag.Title = "Address And Payment";
+}
+
+ 
+
+            @using (Html.BeginForm() )
+            {
+                @Html.AntiForgeryToken()
+
+
+                <h3> Ship to</h3>
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.OrderId)
+
+
+                    <label>First Name:</label>
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Address:</label>
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group">
+                    <label>City:</label>
+                    @Html.TextBoxFor(model => model.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Town:</label>
+                    @Html.TextBoxFor(model => model.Town, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Town, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>PostCode:</label>
+                    @Html.TextBoxFor(model => model.PostCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Country:</label>
+                    @Html.TextBoxFor(model => model.Country, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Phone:</label>
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <h3>Options</h3>
+                <div class="checkbox">
+                    <label>Gift Wrap these items:</label>
+                    @Html.EditorFor(model => model.GiftWrap)
+                </div>
+
+                <div class="checkbox">
+                    <label>I confirm that I'm over 18 :</label>
+                    @Html.EditorFor(model => model.GiftWrap)
+                    @Html.ValidationMessageFor(model => model.Over18, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="text-center">
+                    <input class="btn btn-primary" type="submit" value="Complete order" />
+
+                </div>
+
+
+
+            }
+ 

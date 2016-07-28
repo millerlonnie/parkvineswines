@@ -1,0 +1,63 @@
+﻿@Model WimbledonWines.Models.CartItem
+ @using WimbledonWines.HtmlHelpers
+@using WimbledonWines.WebUI.Infrastructure
+@using WimbledonWines.Models
+@using WimbledonWines.Abstract
+
+@{
+    ViewBag.Title = "Your cart";
+}
+ 
+<!-------------------------------------------------------------------------------old index view from text book-->
+<h2>Index</h2>
+
+<h2> Your Cart</h2>
+<table class="table">
+
+    <thead> <!--Table header-->
+        <tr>
+            <th>Id</th>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th class="text-right">Price</th>
+            <th class ="text-right">Subtotal</th>
+        </tr>
+
+    </thead>
+
+    <tbody>  <!--Table body-->
+
+        @foreach(var line in Model.CartItem)
+        {
+          <tr>
+              <td class="text-center">@line.Id</td>
+            <td class="text-center">@line.Quantity</td>
+              <td class="text-left">@line.Wine.Name</td>
+              <td class="text-right">@line.Wine.Price.ToString("c")</td>
+              <td class="text-right">
+                  @((line.Quantity * line.Wine.Price).ToString("c"))
+              </td>
+
+          </tr> 
+          
+        }
+      
+    </tbody>
+
+    <tfoot>  <!--Table foot-->
+
+    <tr>
+        <td colspan="3" class="text-right">Total:</td>
+        <td class="text-right"> @Model.Cart.ComputeTotalValue().ToString("c")</td>
+
+    </tr>
+
+
+    </tfoot>
+
+
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
+</div>
