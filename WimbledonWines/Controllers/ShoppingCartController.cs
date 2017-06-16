@@ -12,7 +12,7 @@ namespace WimbledonWines.Controllers
     {
         //functions of shopping cart controller: adding, removing and vieiwing items in cart. 
 
-        ApplicationDbContext storeDB = new ApplicationDbContext();
+        ApplicationDbContext  DB = new ApplicationDbContext();
         //
         // GET: /ShoppingCart/
         public PartialViewResult _Menu()
@@ -41,10 +41,10 @@ namespace WimbledonWines.Controllers
          
         public ActionResult AddToCart(int id)
         {
-            // Retrieve the album from the database
+            // Retrieve the wine from the database
 
 
-                var addedWine = storeDB.Wines
+                var addedWine =  DB.Wines
                     .Single(wine => wine.Id == id);
 
                 // Add it to the shopping cart
@@ -69,7 +69,7 @@ namespace WimbledonWines.Controllers
             var cart = ShoppingCart.GetCart(this.HttpContext);
 
             // Get the name of the wine to display confirmation
-            string wineName = storeDB.Carts
+            string wineName =  DB.Carts
                 .Single(item => item.RecordId == id).Wine.WineName;
 
             // Remove from cart

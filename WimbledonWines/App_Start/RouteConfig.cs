@@ -20,7 +20,8 @@ namespace WimbledonWines
                 {
                     controller = "Home",
                     action = "ProductWines",
-                    category = (string)null,
+                    category = "Red",
+                    //category = (string)null,
                     page = 1
 
                 }

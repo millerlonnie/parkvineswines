@@ -16,21 +16,20 @@ namespace WimbledonWines.Tests
     {
 
     [TestMethod]
-        public void Can_Add_New_Lines()
+        public void Can_Add_New_Li()
         {
 
         //Arrange - create some test products/wines
 
-            Wine p1 = new Wine { Id = 1, Name = "P1" };
-            Wine p2 = new Wine { Id = 2, Name = "P2" };
+          //  Wine p1 = new Wine { Id = 1, Name = "WineA" };
+         //   Wine p2 = new Wine { Id = 2, Name = "WineB" };
 
-        //Arange -create a new cart
-
-            Cart target = new Cart();
+         
 
         //Act
-           // target.AddItem(p1, 1);
-           // target.AddItem(p2, 1);
+           Cart target = new Cart ();
+        // target.AddItem(p1);
+        // target.AddItem(p2, 3);
            /// CartLine[] results = target.Lines.ToArray();
 
 
@@ -38,7 +37,13 @@ namespace WimbledonWines.Tests
 
         }
 
+        [TestMethod]
+        public void Can_Add_To_Cart()
+    {
 
+       // Mock<IProductRespository> mock = new Mock<IProductRespository>;
+
+    }
 
 
     }

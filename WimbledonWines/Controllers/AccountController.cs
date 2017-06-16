@@ -22,8 +22,8 @@ namespace WimbledonWines.Controllers
         {
         }
 
-        /// ------------------------------------------------------------------------------------------------
-        
+        /// ---------------------------------migrate user's shopping cart upon regiration/ sigining in---------------------------------------------------------------
+
         private void MigrateShoppingCart(string UserName)
         {
             // Associate shopping cart items with logged-in user
@@ -33,8 +33,8 @@ namespace WimbledonWines.Controllers
             Session[ShoppingCart.CartSessionKey] = UserName;
         }
 
-//----------------------------------------------------------------------------------------------------------------------
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        //----------------------------------------------------------------------------------------------------------------------
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -46,9 +46,9 @@ namespace WimbledonWines.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -78,37 +78,32 @@ namespace WimbledonWines.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)// route users based on user roles
         {
-
-            
-
-            if (!ModelState.IsValid)
-            {
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                MigrateShoppingCart(model.Email);//////////////////////new code///////////////////////////
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Manage");
-                }
-                if (!User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }     
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                return View(model);
-            }
-
+            //
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    ApplicationUser user = UserManager.FindByEmail(model.Email);
+                    var roles = UserManager.GetRoles(user.Id);
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        if (roles.Contains("Admin"))
+                        {
+                            return RedirectToAction("Index", "Manage");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -149,7 +144,7 @@ namespace WimbledonWines.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -184,14 +179,14 @@ namespace WimbledonWines.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     MigrateShoppingCart(model.Email);/////new code//////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

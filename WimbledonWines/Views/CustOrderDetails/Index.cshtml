@@ -7,6 +7,8 @@
 @Html.Partial("_confirmmsg") <!--A prartial view to inform user of sucssful actions using bootstrp alters -->
 
 
+
+
 <h2>OrderDetails</h2>
 
   
@@ -33,6 +35,19 @@
         </th>
         <th>
            Customer Name
+
+        </th>
+        <th>
+           Order Date
+
+        </th>
+
+        <th>
+            Gift Wrap?
+
+        </th>
+        <th>
+            Payment Type
 
         </th>
     </tr>
@@ -63,15 +78,37 @@
         <td>
             @Html.DisplayFor(modelItem => item.Order.FullName)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.OrderDate)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.GiftWrap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.PaymentType)
+        </td>
 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.OrderDetailId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailId }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.OrderDetailId }) |*@
             @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailId })
+
         </td>
     </tr>
 }
-
+    }
 </table>
+    
+    
+
+
 <br /><br />
+
+    <br />
+    <br />
+    
+  
+
 @Html.ActionLink("Back To Admins Homepage", "Index", "Manage", null, new { @class = "btn btn-btn btn-default btn-lg" })
+@Html.ActionLink("View Customer Details", "Index", "Orders", null, new { @class = "btn btn-btn btn-default btn-lg" })

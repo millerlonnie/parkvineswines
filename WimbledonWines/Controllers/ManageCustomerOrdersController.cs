@@ -9,6 +9,8 @@ using WimbledonWines.Models;
 
 namespace WimbledonWines.Controllers
 {
+
+    [Authorize(Roles = "Admin")] //controller is accessible only by the admin
     public class ManageCustomerOrdersController : Controller
     {
         //functions of shopping cart controller: adding, removing and vieiwing items in cart. 

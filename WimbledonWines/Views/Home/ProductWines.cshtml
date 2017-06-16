@@ -4,14 +4,41 @@
 @using WimbledonWines.Models
 @using WimbledonWines.Abstract
 
-
+ 
  
 
 @{
     ViewBag.Title = "Wine Catalogue";
 
 }
- 
+
+ @*<script type="text/jscript">
+
+     var nH, nW, oH, oW;  //variable declaration
+     function zoomtoggle(iwidesmall, ihighsmall, iwidelarge, ihighlarge, whichimage) {
+         oW = whichimage.style.width; oH = whichimage.style.height;
+         if ((oW == iwidelarge) || (oH == ihighlarge)) {
+             nW = iwidesmall;
+             nH = ihighsmall;
+         }
+         else {
+             nW = iwidelarge;
+             nH = ihighlarge;
+         }
+         whichimage.style.width = nW;
+         whichimage.style.height = nH;
+     }
+
+</script>*@
+
+
+
+<script src="~/Script/ImageZoom1.js"></script>
+
+
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-2" id="_Menu">
@@ -40,25 +67,31 @@
 
 
 
-                            <tr>
-                                <td colspan="5" width="200">
+                            <tr> @*display inforamtion in a single row*@
+                                <td colspan="5" width="200"> @*first column*@
                                     <span class="h4" style="color:#4d0000">
                                         @m.WineName
                                          
                                     </span>
                                     <div id="img">
 
-
-                                        <img src="@Html.DisplayFor(modelItem => m.ImagePath)" width="170" height="200" />
-                                         
-
-
-
+                                        <!-- ***image upload******* -->
+                                        @if (m.ImagePath.Contains("http") || m.ImagePath.Contains("https"))
+                                        {
+                                            <img src='@Html.DisplayFor(modelItem => m.ImagePath)' width="170" height="200" onmouseout="zoomtoggle('100px','100px','200px','200px',this);"
+                                                 onmouseover="zoomtoggle('400px','400px','600px','600px',this);" />
+                                        }
+                                        else
+                                        {
+                                            <img src='@string.Format("{0}/{1}",System.Configuration.ConfigurationManager.AppSettings["Wines_Image"] ,Html.DisplayFor(modelItem => m.ImagePath))' width="170" height="200" onmouseout="zoomtoggle(' 100px','100px','200px','200px',this);"
+                                                 onmouseover="zoomtoggle('400px','400px','600px','600px',this);" />
+                                        }
+                                        <!-- ***image upload******* -->
                                     </div> 
                                 </td>
                                  
 
-                                <td>
+                                <td>  @*second column*@ 
 
 
                                     Description:
@@ -73,12 +106,12 @@
                                     @Html.DisplayFor(modelItem => m.AlcoholPercentage)
                                 </td>
 
-                                <td>
+                                <td>  @*third column*@ 
                                     Wine type:
                                     @Html.DisplayFor(modelItem => m.WineType)
                                 </td>
 
-                                <td>
+                                <td> @*fourth column*@ 
                                     <span class="btn btn-info btn-lg">
                                      @Html.DisplayFor(modelItem => m.Price)
                                        
@@ -110,7 +143,7 @@
             <!-- razor block that creates a html form for each listed product line 82 -->
             <!--upon subitting the form, it calls the AddToCart action method in the cart controller-->
             <!--by defualt, BeginForm helper method creates a form that uses the HTTP post method-->
-            <div class=" pull-right">
+            <div class=" pull-right"> @*position number on the right hand side*@
 
                 @Html.PageLinks(Model.PagingInfo, x => Url.Action("ProductWines", new { page = x, category = Model.CurrentCategory }))
 

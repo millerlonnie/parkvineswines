@@ -6,13 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using WimbledonWines.Models;
- 
+using WimbledonWines.ViewModels;
+using System.IO;
+
 
 
 namespace WimbledonWines.Controllers
 {
-     [Authorize(Roles = "Admin")] //controller is accessible only by the admin role
+    [Authorize(Roles = "Admin")] //controller is accessible only by the admin role
     public class CustOrderDetailsController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -30,32 +35,19 @@ namespace WimbledonWines.Controllers
         }
         public ActionResult Index()
         {
+            //helps to display data from multiple classes
             var m = db.OrderDetails.Include(winesDb => winesDb.Wine)//helps to access wines db to display wines name
                 .Include(ordersDb => ordersDb.Order); // include order db to access customer names
-           return View(m.ToList());
-            
-           // return View(db.OrderDetails.ToList());
+            return View(m.ToList());
+
+            // return View(db.OrderDetails.ToList());
         }
 
         // GET: CustOrderDetails/Details/5
         public ActionResult Details(int id)
         {
-          /*  if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            OrderDetail orderDetail = db.OrderDetails.Find(id);
-            if (orderDetail == null)
-            {
-                return HttpNotFound();
-            }
-            return View(orderDetail);
-           */
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
+             
 
             OrderDetail orderdetails = db.OrderDetails.Find(id);
             if (orderdetails == null)
@@ -65,7 +57,7 @@ namespace WimbledonWines.Controllers
 
             return View(orderdetails);
 
-             
+
         }
 
 
@@ -76,12 +68,12 @@ namespace WimbledonWines.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           OrderDetail orderDetail = db.OrderDetails.Find(id);
-           if (orderDetail == null)
+            OrderDetail orderDetail = db.OrderDetails.Find(id);
+            if (orderDetail == null)
             {
                 return HttpNotFound();
             }
-           return View(orderDetail);
+            return View(orderDetail);
         }
 
         // POST: OrderDetails/Edit/5
@@ -137,5 +129,40 @@ namespace WimbledonWines.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+    //    //......................................excel export...........................................
+ 
+
+
+
+        public ActionResult ExportOrderDetails()
+        {
+            var model = db.OrderDetails;
+            return View(model);
+        }
+
+        public ActionResult ExportData()
+        {
+            GridView gv = new GridView();
+            gv.DataSource = db.OrderDetails.ToList();
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=Export.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+
+            return RedirectToAction("ExportOrderDetails");
+        }
+
+
     }
 }

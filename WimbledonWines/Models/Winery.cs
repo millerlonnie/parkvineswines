@@ -16,10 +16,10 @@ namespace WimbledonWines.Models
         public string Name { get; set; }
 
 
-        //foreign key from country class
+        //enuemarator class providing a list of choices
         public Country Country { get; set; }
 
-        public virtual ICollection<Wine>Wines { get; set; }// Navigation property 
+        public virtual ICollection<Wine>Wines { get; set; }// Navigation property  ...ICollection is used on many * , eg a list of wines
 
     }
 

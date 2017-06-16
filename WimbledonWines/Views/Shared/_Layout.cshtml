@@ -1,7 +1,7 @@
 ﻿ <!DOCTYPE html>
 <html>
 <head>
-    <link rel="shortcut icon" type="image/x-icon" href="~/Images/FavIcon/favicon.ico" />`
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/FavIcon/favicon.ico" />    @*adding a fav icon*@ 
 
 
     <meta charset="utf-8" />
@@ -16,49 +16,63 @@
     @System.Web.Optimization.Scripts.Render(String.Format("~/Scripts/Libs/Globalize/Cultures/jquery.ui.datepicker-{0}.js", "en-US"))
     @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/Apps/js")
 
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css")                        @*adding bootstap files*@
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/creative.css" rel="stylesheet" />
+    <link href="~/Content/creative.css" rel="stylesheet" /> @*adding bootsrap theme*@
 
-    <link href="~/Content/Font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Font-awesome/font-awesome.min.css" rel="stylesheet" /> 
     <link href="~/Content/Font-awesome/font-awesome.css" rel="stylesheet" />
 
 
     <style>
-        .glyphicon {
+        .glyphicon {                   /*specifying glyphicon size and colour*/
             font-size: 5em;
             color: #ff9900;
         }
 
-        h1 {
+        h1 {                            /*specifying header 1 colour*/
             color: #800000;
         }
 
-        h2 {
+        h2 {                             /*specifying header 2 colour*/
             color: #cc3300;
         }
 
-        p {
-            color: #cc3300;
+        p {                              /*specifying paragraph 1  colour and size */
+            color: #cc3300;             
             font-size: 17px;
         }
 
         body {
-            padding-top: 50px;
-            padding-bottom: 20px;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-size: cover;
-            background-attachment: fixed;
-            background-image: url('../Images/Background/Background.jpg');
+            padding-top: 50px;          /*padding  generate space around content, space on top of the body of 50px*/
+            padding-bottom: 20px;        /*padding  generate space around content, space at the bootom of the body of 20px*/
+            background-repeat: no-repeat;   /*specify if/how a background image will be repeated*/
+            background-attachment: scroll; /*specify if a background image is fixed or scrolls with the rest of the page, scroll > ensures background is fixed*/
+            background-size: cover;       /*set the size of a background image, cover: fill the whole background with background image*/
+            background-attachment: fixed;  /*specify if a background image is fixed or scrolls with the rest of the page*/
+            background-image: url('../Images/Background/Background.jpg'); /*specify backgound image*/
         }
 
         .whiteBackground {
             background-color: wheat;
-            opacity: 0.9;
-            padding: 2em;
+            opacity: 0.9;  /*make background transparent*/
+            padding: 2em; /*clears an area around the content*/
         }
 
+          .imgthumbnail 
+        { 
+            height:80px; 
+            width:80px; 
+        } 
+        .imgdiv 
+        { 
+            height:349px; 
+            width:334px; 
+            background-color:#FFF;
+            margin : 0px auto;
+            padding:10px; 
+            border:solid 1px #D3CFCB;             
+        }        
 
     </style>
      
@@ -115,7 +129,7 @@
 
 
 
-<li>@Html.ActionLink("Wineries", "Index", "Manage")</li>
+@*<li>@Html.ActionLink("Wineries", "Index", "Manage")</li>*@
                      
                    
                     <li>@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
@@ -137,8 +151,26 @@
                 @RenderBody()
                 <hr />
                 <footer>
+
+
+
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-2"> @Html.ActionLink("Terms & Conditions", "TermsConditions", "Home") </div>
+                            <div class="col-sm-2"></div>
+                             <div class="col-sm-2"> <img src="~/Content/Images/drinkaware.jpg" width="200" height="100" /></div> 
+                     
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2"> <img src="~/Content/Images/PayPal.png" width="200" height="100" /> </div>
+                            </div>
+                    </div>
+                    <hr />
+
                     <p>&copy; @DateTime.Now.Year - Park Vines</p>
                 </footer>
+
 
             </div>
          

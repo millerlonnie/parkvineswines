@@ -10,10 +10,10 @@
 <div class="col-md-2">
 
     <h4 align="center" style="color:#4d0000"><strong> Categories</strong> </h4>
-    
+
     <br />
-    
-     
+
+
     <div class="btn btn-alert">
 
         @Html.ActionLink("Red", "ProductWines", "Home", new { category = "Red" }, null)
@@ -31,9 +31,36 @@
         @Html.ActionLink("Fortifed", "ProductWines", "Home", new { category = "Fortifed" }, null)
         <br /><br />
         @Html.ActionLink("Other", "ProductWines", "Home", new { category = "Other" }, null)
+        <br />
+
+
+    </div>
+     
+     
+
+        @using (Html.BeginForm("SearchWine", "Home", FormMethod.Get))
+        {
+
+            @*<labe align="center"><font size="2">SearhWine</font> </labe>*@
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" placeholder="Search Wine" class="btn btn-default" value="Search Wine">
+
+
+
+        }
+
+         
+
+
+
+
+
+
+
+
+
 
 
 
     </div>
-</div>
  

@@ -1,0 +1,68 @@
+﻿@model WimbledonWines.Models.PaypalProcessViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Processing Paypal ...</title>
+</head>
+<body onload="document.Paypal.submit();">
+
+    @*<form id="Form1" name="Paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">*@
+    <form id="Paypal" name="Paypal" action="https://www.sandbox.paypal.com/cgi-bin/websc" method="post">
+
+
+
+        <input type="hidden" name="cmd" value="_cart" />
+
+        <input type="hidden" name="upload" value="1" />
+
+        <!-- The following is for aggregated PayPal data instead of itemized -->
+        <!--
+        <input type="hidden" name="item_name" value="Aggregated Items" />
+        <input type="hidden" name="amount" value="<%=invoicetotal%>" />
+        -->
+        <!-- The following is for itemized PayPal data instead of the aggregated version -->
+
+        @foreach (Cart item in Model.lst_cart)
+        {
+            var count = Model.lst_cart.IndexOf(item) + 1;
+            <input type="hidden" name="item_name_@count" value="@item.Wine.WineName" />
+            <input type="hidden" name="amount_@count" value="@item.Wine.Price" />
+            <input type="hidden" name="quantity_@count" value="@item.Count" />
+        }   
+        
+        <!-- STANDARD DATA -->
+        <input type="hidden" name="business" value="@Model.paypal_email" />
+        <input type="hidden" name="invoice" value="@Model.Invoice_id" />
+        <input type="hidden" name="no_note" value="0" />
+        <input type="hidden" name="currency_code" value="@Model.currency_code" />
+        <input type="hidden" name="lc" value="@Model.language_code" />
+
+        <input type="hidden" name="address1" value="@Model.order.Address" />
+        <input type="hidden" name="address2" value="" />
+        <input type="hidden" name="city" value="@Model.order.City" />
+        <input type="hidden" name="country" value="@Model.order.Country" />
+        <input type="hidden" name="email" value="@Model.order.Email" />
+        <input type="hidden" name="first_name" value="@Model.order.FirstName" />
+        <input type="hidden" name="last_name" value="@Model.order.LastName" />
+        <input type="hidden" name="state" value="@Model.order.Town">
+        <input type="hidden" name="zip" value="@Model.order.PostCode" />
+        <input type="hidden" name="night_phone_a" value="@Model.order.Phone" />
+        <input type="hidden" name="night_phone_b" value="" />
+
+        <input type="hidden" name="address_override" value="1">
+        <input type="hidden" name="page_style" value="paypal" />
+        <input type="hidden" name="no_shipping" value="1" />
+        <input type="hidden" name="return" value="@Model.return_url" />
+        <input type="hidden" name="cancel_return" value="@Model.cancel_url" />
+        <input type="hidden" name="cn" value="How did you hear about us?" />
+
+        <h1 style="text-align:center">Processing your payment. please wait....</h1>
+    </form>
+</body>
+</html>

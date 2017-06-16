@@ -1,4 +1,4 @@
-﻿@model int
+﻿@model Order
 
 @{
     ViewBag.Title = "Checkout Complete";
@@ -7,7 +7,7 @@
 <div class="row text-center">
     <h2>Checkout Completed</h2>
     <br />
-    <p>Thanks for shopping with us, your oder number is : @model
+    <p>Thanks for shopping with us, your order number is : @Model.OrderId
     <br />
     <p>
         Feel free to check out some more wine

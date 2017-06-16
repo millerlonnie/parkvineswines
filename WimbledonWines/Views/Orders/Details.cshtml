@@ -106,6 +106,62 @@
             @Html.DisplayFor(model => model.FullName)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentType)
+        </dd>
+
+        @*///////////////////////////////////////////////////////////////*@
+
+        <dd>
+
+            <table class="table">
+                <tr>
+                    <th>  Order Id</th>
+                    <th> Wine Id</th>
+                    <th>  Wine Name</th>
+                    <th>  Quantity</th>
+                    <th>  Unit Price</th>
+                   
+                </tr>
+
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderId)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.Wine.Id)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Wine.WineName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+
+                        <td>
+                         £   @Html.DisplayFor(modelItem => item.UnitPrice)
+                        </td>
+
+                         
+                    </tr>
+
+                }
+
+            </table>
+
+        </dd>
+         
+        @*///////////////////////////////////////////////////////////////*@
+
+
     </dl>
 </div>
 <p>

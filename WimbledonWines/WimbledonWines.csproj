@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +40,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.86.0\lib\net40\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -195,7 +202,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CustOrderDetailsController.cs" />
-    <Compile Include="Controllers\GoogleMapsAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageCustomerOrdersController.cs" />
@@ -227,9 +233,9 @@
     <Compile Include="Infrastructure\IProductsRepository.cs" />
     <Compile Include="Infrastructure\Mock.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Migrations\201607281344250_OrderAndCart.cs" />
-    <Compile Include="Migrations\201607281344250_OrderAndCart.Designer.cs">
-      <DependentUpon>201607281344250_OrderAndCart.cs</DependentUpon>
+    <Compile Include="Migrations\201609070551059_OrderAndCart.cs" />
+    <Compile Include="Migrations\201609070551059_OrderAndCart.Designer.cs">
+      <DependentUpon>201609070551059_OrderAndCart.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs">
@@ -264,22 +270,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CustomerOrdersViewModel.cs" />
+    <Compile Include="ViewModels\ExcelExportViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
+    <Compile Include="ViewModels\PaypalProcessViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ImageDatabase.mdf" />
-    <Content Include="App_Data\ImageDatabase_log.ldf">
-      <DependentUpon>ImageDatabase.mdf</DependentUpon>
+    <Content Include="App_Data\aspnet-WimbledonWines-20160525092509.mdf" />
+    <Content Include="App_Data\aspnet-WimbledonWines-20160525092509_log.ldf">
+      <DependentUpon>aspnet-WimbledonWines-20160525092509.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\creative.css" />
     <Content Include="Content\Font-awesome\font-awesome.css" />
     <Content Include="Content\Font-awesome\font-awesome.min.css" />
+    <Content Include="Content\Images\drinkaware.jpg" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\PayPal.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -303,6 +313,7 @@
     <Content Include="Images\Portfolio\5.jpg" />
     <Content Include="Images\Portfolio\6.jpg" />
     <Content Include="Images\Portfolio\7.jpg" />
+    <Content Include="Images\Portfolio\CheckOutWithPayPal.jpg" />
     <Content Include="Images\Portfolio\icon-cart.png" />
     <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -314,6 +325,7 @@
       <DependentUpon>MyModel.edmx</DependentUpon>
       <LastGenOutput>MyModel.cs</LastGenOutput>
     </Content>
+    <Content Include="PagelistStyleSheet\PagedList.css" />
     <Content Include="Script\bootstrap.js" />
     <Content Include="Script\bootstrap.min.js" />
     <EntityDeploy Include="MyModel.edmx">
@@ -323,11 +335,16 @@
     <Content Include="MyModel.edmx.diagram">
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Script\jquery-1.10.2.intellisense.js" />
     <Content Include="Script\GoogleMapsApi.js" />
+    <Content Include="Script\ImageZoom1.js" />
     <Content Include="Script\jquery-1.10.2.js" />
     <Content Include="Script\jquery-1.10.2.min.js" />
     <None Include="Script\jquery.validate-vsdoc.js" />
+    <Content Include="Script\jquery-3.1.0.js" />
+    <Content Include="Script\jquery.axZm.js" />
+    <Content Include="Script\jquery.axZm.loader.js" />
     <Content Include="Script\jquery.validate.js" />
     <Content Include="Script\jquery.validate.min.js" />
     <Content Include="Script\jquery.validate.unobtrusive.js" />
@@ -420,11 +437,20 @@
     <Content Include="Views\CustOrderDetails\_Menu.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\GoogleMapsAPI\Index.cshtml" />
+    <Content Include="Views\Orders\_ConfirmMsg.cshtml" />
+    <Content Include="Views\ManageCustomerOrders\_ConfirmMsg.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Checkout\ProcessPaypal.cshtml" />
+    <Content Include="Views\Checkout\PayPalVerification.cshtml" />
+    <Content Include="Views\Home\SearchWine.cshtml" />
+    <Content Include="Views\Wines\_delete.cshtml" />
+    <Content Include="Views\Wines\OrderByPrice.cshtml" />
+    <Content Include="Views\Wines\OrderByName.cshtml" />
+    <Content Include="Views\Home\TermsConditions.cshtml" />
+    <Content Include="Views\CustOrderDetails\ExportOrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\Binders\" />
-    <Folder Include="Views\PayPal\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -437,8 +463,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607281344250_OrderAndCart.resx">
-      <DependentUpon>201607281344250_OrderAndCart.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609070551059_OrderAndCart.resx">
+      <DependentUpon>201609070551059_OrderAndCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

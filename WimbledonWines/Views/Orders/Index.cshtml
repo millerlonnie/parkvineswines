@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<WimbledonWines.Models.Order>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customer Order Details";
 }
 
-<h2>Index</h2>
+@Html.Partial("_confirmmsg") <!--A prartial view to inform user of sucssful actions using bootstrp alters -->
+<h2>Customer Order Details</h2>
 
  
 <table class="table">
@@ -42,6 +43,9 @@
             @Html.DisplayNameFor(model => model.GiftWrap)
         </th>
         
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </th>
         
         <th></th>
     </tr>
@@ -79,7 +83,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.GiftWrap)
         </td>
-        
+
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentType)
+        </td>
         
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.OrderId }) |

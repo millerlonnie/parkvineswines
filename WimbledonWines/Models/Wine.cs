@@ -41,7 +41,7 @@ namespace WimbledonWines.Models
        
         
         [Display(Name ="Winery Name")] //being user friendly: displaying Winery instead of WineryID
-        public string Name { get; set; }
+        public string WineryName { get; set; }
         
         //setting a 1-* relationshio between the Wine and winery
        // public virtual Winery Winery { get; set; }// its a foreign key from winery > uses public virtual  Winery, references winery id pk
@@ -50,8 +50,9 @@ namespace WimbledonWines.Models
 
        
         
-       // public object WineryID { get; set; } // a wine is made by one winery
-       public virtual   Winery  Winery { get; set; }
+       // winery foreign key.
+      public virtual   Winery  Winery { get; set; }
+        
     } //////////////////////
 
     //the enumerator list of wine types

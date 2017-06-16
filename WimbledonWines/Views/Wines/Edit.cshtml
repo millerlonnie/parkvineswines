@@ -10,13 +10,15 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Wine</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
+        <!--***************-->
+        @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @style = "display:none" } })
+        <!--***************-->
         <div class="form-group">
             @Html.LabelFor(model => model.WineName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -49,19 +51,6 @@
             </div>
         </div>
 
-       
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -83,10 +72,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.WineryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("getWinerList1", ViewBag.WineriesName as SelectList, "Please select name");
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <!--***************-->
+                @Html.DropDownList("WineryId", ViewBag.WineriesName as SelectList, "Please select Winery name")
+                @Html.ValidationMessageFor(model => model.Winery.Id, "", new { @class = "text-danger" })
+                <!--***************-->
             </div>
         </div>
 
@@ -105,3 +96,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+

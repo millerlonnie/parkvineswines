@@ -36,13 +36,16 @@ namespace WimbledonWines.Models
         [ScaffoldColumn(false)]
         public decimal Total { get; set; }
         [ScaffoldColumn(false)]
-        public System.DateTime OrderDate { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public System.DateTime OrderDate { get; set; } //reorder order date and time
+       // public List<OrderDetail> OrderDetails { get; set; }
+       public virtual ICollection<OrderDetail> OrderDetails { get; set;  } //provide a one to many relationship to OrderDetails Class
          
         public bool GiftWrap { get; set; }
          [Required(ErrorMessage = "Confirm age")]
         public bool Over18 { get; set; }
-
+         public string PaymentType { get; set; }   //record payment type
+         public bool PaypalStatus { get; set; }    
+         public string Paypal_Response { get; set; }
 
          public string FullName
          {

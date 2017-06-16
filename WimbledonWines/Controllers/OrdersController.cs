@@ -27,10 +27,7 @@ namespace WimbledonWines.Controllers
         public ActionResult Details(int id)
         {
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Order orders = db.Orders.Find(id);
             if (orders == null)
             {
@@ -86,23 +83,33 @@ namespace WimbledonWines.Controllers
         // GET: Orders/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+             
+           Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
         }
 
-        // POST: Orders/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+           Order order = db.Orders.Find(id);
+            db.Orders.Remove(order);
+            db.SaveChanges();
+            TempData["message"] = string.Format("{0} has been deleted", order.OrderId, true); //informing that order has been deleted with the help of a prtail view thaht uses bootstrap classes
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

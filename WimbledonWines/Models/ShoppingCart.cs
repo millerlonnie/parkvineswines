@@ -9,7 +9,7 @@ namespace WimbledonWines.Models
     public partial class ShoppingCart
     {
 
-        ApplicationDbContext storeDB = new ApplicationDbContext();
+        ApplicationDbContext wineDB = new ApplicationDbContext();
         string ShoppingCartId { get; set; }
         public const string CartSessionKey = "CartId";
         public static ShoppingCart GetCart(HttpContextBase context)
@@ -25,8 +25,8 @@ namespace WimbledonWines.Models
         }
         public void AddToCart(Wine wine)
         {
-            // Get the matching cart and album instances
-            var cartItem = storeDB.Carts.SingleOrDefault(
+            // Get the matching cart and wine instances
+            var cartItem = wineDB.Carts.SingleOrDefault(
                 c => c.CartId == ShoppingCartId
                 && c.WineId == wine.Id);
 
@@ -40,7 +40,7 @@ namespace WimbledonWines.Models
                     Count = 1,
                     DateCreated = DateTime.Now
                 };
-                storeDB.Carts.Add(cartItem);
+                wineDB.Carts.Add(cartItem);
             }
             else
             {
@@ -49,12 +49,12 @@ namespace WimbledonWines.Models
                 cartItem.Count++;
             }
             // Save changes
-            storeDB.SaveChanges();
+            wineDB.SaveChanges();
         }
         public int RemoveFromCart(int id)
         {
             // Get the cart
-            var cartItem = storeDB.Carts.Single(
+            var cartItem = wineDB.Carts.Single(
                 cart => cart.CartId == ShoppingCartId
                 && cart.RecordId == id);
 
@@ -69,34 +69,34 @@ namespace WimbledonWines.Models
                 }
                 else
                 {
-                    storeDB.Carts.Remove(cartItem);
+                    wineDB.Carts.Remove(cartItem);
                 }
                 // Save changes
-                storeDB.SaveChanges();
+                wineDB.SaveChanges();
             }
             return itemCount;
         }
         public void EmptyCart()
         {
-            var cartItems = storeDB.Carts.Where(
+            var cartItems = wineDB.Carts.Where(
                 cart => cart.CartId == ShoppingCartId);
 
             foreach (var cartItem in cartItems)
             {
-                storeDB.Carts.Remove(cartItem);
+                wineDB.Carts.Remove(cartItem);
             }
             // Save changes
-            storeDB.SaveChanges();
+            wineDB.SaveChanges();
         }
         public List<Cart> GetCartItems()
         {
-            return storeDB.Carts.Where(
+            return wineDB.Carts.Where(
                 cart => cart.CartId == ShoppingCartId).ToList();
         }
         public int GetCount()
         {
             // Get the count of each item in the cart and sum them up
-            int? count = (from cartItems in storeDB.Carts
+            int? count = (from cartItems in wineDB.Carts
                           where cartItems.CartId == ShoppingCartId
                           select (int?)cartItems.Count).Sum();
             // Return 0 if all entries are null
@@ -104,10 +104,10 @@ namespace WimbledonWines.Models
         }
         public decimal GetTotal()
         {
-            // Multiply album price by count of that album to get 
-            // the current price for each of those albums in the cart
-            // sum all album price totals to get the cart total
-            decimal? total = (from cartItems in storeDB.Carts
+            // Multiply wine price by count of that wine to get 
+            // the current price for each of those winess in the cart
+            // sum all wine  price totals to get the cart total
+            decimal? total = (from cartItems in wineDB.Carts
                               where cartItems.CartId == ShoppingCartId
                               select (int?)cartItems.Count *
                               cartItems.Wine.Price).Sum();
@@ -133,16 +133,20 @@ namespace WimbledonWines.Models
                 // Set the order total of the shopping cart
                 orderTotal += (item.Count * item.Wine.Price);
 
-                storeDB.OrderDetails.Add(orderDetail);
+                wineDB.OrderDetails.Add(orderDetail);
 
             }
             // Set the order's total to the orderTotal count
-            order.Total = orderTotal;
+            Order order_db = wineDB.Orders.Where(x => x.OrderId == order.OrderId).FirstOrDefault();
+            order_db.Total = orderTotal;
 
             // Save the order
-            storeDB.SaveChanges();
-            // Empty the shopping cart
-            EmptyCart();
+            wineDB.SaveChanges();
+            // Empty the shopping cart if its not from paypal
+            if (order.PaymentType != "PayPal")
+            {
+                EmptyCart();
+            }
             // Return the OrderId as the confirmation number
             return order.OrderId;
         }
@@ -170,16 +174,17 @@ namespace WimbledonWines.Models
         // be associated with their username
         public void MigrateCart(string userName)
         {
-            var shoppingCart = storeDB.Carts.Where(
+            var shoppingCart = wineDB.Carts.Where(
                 c => c.CartId == ShoppingCartId);
 
             foreach (Cart item in shoppingCart)
             {
                 item.CartId = userName;
             }
-            storeDB.SaveChanges();
+            wineDB.SaveChanges();
         }
 
 
     }
 }
+

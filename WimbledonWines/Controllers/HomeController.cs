@@ -21,17 +21,41 @@ namespace WimbledonWines.Controllers
     public class HomeController : Controller
     {
 
-       // private ApplicationDbContext respository;
+        
         private ApplicationDbContext db = new ApplicationDbContext();
-        public int PageSize = 2; // adding pagnation of  5 items per page.
+        public int PageSize = 4; // adding pagnation of  3 items per page.
 
-        /*
-        public HomeController(ApplicationDbContext productRespository)
+         
+
+
+
+        public ActionResult SearchWine(  string searchString, int? page)
         {
-            this.respository = productRespository;
+            
+            ViewBag.CurrentFilter = searchString; //helps in sorting, seraching, filtering 
+
+            var wines = from s in db.Wines
+                        select s;
+            //try {  
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                wines = wines.Where(s => s.WineName.Contains(searchString));
+
+            }
+
+                // }
+
+           // catch (DataException /* dex */ )
+           
+            else
+                ModelState.AddModelError("", "Item is unavailable, try again");
+           // }
+
+
+            return View(wines.ToList());
         }
 
-         */
 
         public ActionResult Index()
         {
@@ -51,6 +75,14 @@ namespace WimbledonWines.Controllers
 
             return View();
         }
+
+        public ActionResult TermsConditions()
+        {
+            ViewBag.Message = "Terms & Conditions.";
+
+            return View();
+        }
+
 
         public PartialViewResult _initialPartial()
         {

@@ -13,7 +13,7 @@ namespace WimbledonWines.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201607281344250_OrderAndCart"; }
+            get { return "201609070551059_OrderAndCart"; }
         }
         
         string IMigrationMetadata.Source

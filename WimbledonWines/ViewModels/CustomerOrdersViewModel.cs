@@ -14,14 +14,15 @@ namespace WimbledonWines.ViewModels
 
       
       //  public List<OrderDetail> OrderDetails { get; set; }//new//////////////////////////
-        public  Order  Orders { get; set; }
-        public    OrderDetail  OrderDetails   { get; set; }
-        public  Wine Wines { get; set; }
+     //   public  Order  Orders { get; set; }
+      //  public    OrderDetail  OrderDetails   { get; set; }
+       // public  Wine Wines { get; set; }
         public IndexViewModel IndexViewModels { get; set; }
         //------------------------------------------------------------------------------
         public object WineID { get; set; }
         public string WineName { get; set; }
 
+        
 
     }
 }

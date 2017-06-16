@@ -39,7 +39,7 @@ namespace WimbledonWines.Models
          public DbSet<Cart>       Carts { get; set; }
        public DbSet<Order>       Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<GoogleLocation> GoogleLocations { get; set; }
+        
        // public DbSet<Location> Locations { get; set; } //for google maps API
        //public ICollection<CartItem> ShoppingCartItems { get; set; }
 ///---------------------------------------------------------------------------------------------------------------------
